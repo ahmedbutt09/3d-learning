@@ -1,79 +1,108 @@
-# 3D Learning: The Third Dimension Learning Institute
+# The Third Dimension Learning Institute (3D Learning)
 
-Online tutoring platform with **separate logins for Students, Tutors and the Owner (admin)**.
-React (Vite) front end, Node/Express API, SQL database (SQLite locally, PostgreSQL in production).
-Responsive layout for desktop and mobile.
+A full-stack, cross-platform, reactive online tutoring platform built with **React (Vite)**, **Node.js / Express**, and a **connected SQL database** (native SQLite locally, PostgreSQL on Render).
 
-## Features
+Designed in the minimalist, prestigious British academic style of **[edemis.com](https://edemis.com)** (midnight navy `#0B1B2B`, warm ivory `#F8F6F0`, and gold accents with elegant serif headlines), while incorporating **all functionalities and features from the 3D Learning Studio App**:
+- **Separate Logins** for Students, Tutors, and Institute Owner (Admin)
+- **Top Bar Mode Switcher**: Quick toggle between *Student View*, *Tutor View*, and *Owner (Admin) View*
+- **6 Core Academic Hub Sections**:
+  1. **Official Curriculum (Subjects Offered)**: 10 subject tracks (Mathematics, English Language, Sciences, Biology, Chemistry, Physics, Biochemistry, History, GCSE/AP History, Quran Classes) with sub-discipline pills, grade levels, and instant 1-click scheduling.
+  2. **Tutors & CVs Directory**: Search, subject filtering, CV transcripts, intro videos, 168-hour weekly availability status, and "+ Add Tutor & Upload CV" studio.
+  3. **Master Class Schedule**: 24h × 7-day availability matrix with real-time overlap protection and conflict-free booking.
+  4. **Student Academic Portal & Dashboard**: 4 key performance metrics, scheduled video lessons with instant Jitsi Meet classroom links, integrated USD payment history ledger, and real-time automated email dispatches.
+  5. **Direct Faculty Messaging**: Secure in-app communication with topic pills (*Free Trial*, *Homework Help*, *Exam Revision*) and real-time polling.
+  6. **Student Reviews & Ratings**: Testimonials feed highlighting academic outcomes (*"Exam grade improved from B to A*"*) and interactive rating submission form.
+- **Interactive Modals**:
+  - **Schedule Session Modal**: 4-step wizard (Day selector, 24-hour slot picker, fee presets $0-$50, Free Trial / Card / Credit payment, automated email dispatch).
+  - **Tutor Profile & CV Modal**: 4 tabs (Curriculum Vitae, Video Player & Syllabus, 168-Slot Availability, Student Reviews).
+  - **Add Tutor & Upload CV Studio Modal**: Full faculty profile builder, CV file parser, and interactive 168-hour availability grid.
 
-| Area | What it does |
-| --- | --- |
-| Tutor directory | Search and filter tutors, read their CV, watch an intro video (YouTube/Vimeo), see ratings and reviews |
-| Conflict-free scheduling | 60-minute slots generated from each tutor's weekly availability. Booked or held slots disappear, and the server re-checks tutor and student clashes. Unpaid bookings hold a slot for 15 minutes |
-| Video lessons | Every confirmed booking gets a private Jitsi Meet room; "Join" unlocks 15 minutes before the start |
-| Payments | Checkout, receipts, automatic refund when a tutor/owner cancels or a student cancels 2+ hours ahead (built-in **test gateway**, see below) |
-| Progress analytics | Tutors record score and notes per lesson; students see line and bar charts. Tutors see earnings charts, the owner sees revenue and user stats |
-| Live messaging | Student/tutor/owner chat with unread counts (updates every 3 seconds) |
-| Owner portal | Approve or suspend tutors, add users, view all sessions, payments and progress records |
+---
 
-Roles: `student` (self sign-up), `tutor` (self sign-up, needs owner approval to appear publicly), `admin` (the owner, seeded on first start).
+## 🚀 Running Locally in VS Code
 
-## Run locally in VS Code
+### Prerequisites
+- Node.js 18 or newer (Node 20, 22, and 24 are fully supported).
 
-Requires Node.js 18 or newer.
-
+### Step 1: Install Dependencies
+Open your terminal in the project root:
 ```bash
-npm run install:all     # installs server and client dependencies
-npm run dev             # API on :4000 and React on :5173
+npm run install:all
 ```
+*(Installs both client and server dependencies)*
 
-Open http://localhost:5173. The SQLite database file `server/data.db` is created automatically.
-
-Seeded accounts (change them before going live):
-
-| Role | Email | Password |
-| --- | --- | --- |
-| Owner | admin@3dlearning.com | Admin@12345 |
-| Tutor | ayesha@3dlearning.com | Tutor@12345 |
-| Student | student@3dlearning.com | Student@12345 |
-
-Sign-in pages: `/login/student`, `/login/tutor`, `/login/admin`.
-
-## Environment variables (server)
-
-See `server/.env.example`. Key ones: `DATABASE_URL` (PostgreSQL; empty means SQLite), `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `SEED_DEMO`, `CLIENT_ORIGIN`.
-Client: `VITE_API_URL` (only when the API is on a different domain).
-
-## Upload to GitHub
-
+### Step 2: Start Development Server
 ```bash
-git init            # skip if already initialised
+npm run dev
+```
+- API server runs on: `http://localhost:4000`
+- React Vite application runs on: `http://localhost:5173`
+
+The database (`server/data.db`) is automatically initialized and seeded with demo tutors, curriculum subjects, student profile, availability slots, and reviews on first boot.
+
+---
+
+## 👥 Seeded Accounts & Separate Logins
+
+| Role | Email | Password | Direct Login URL |
+| :--- | :--- | :--- | :--- |
+| **Institute Owner (Admin)** | `admin@3dlearning.com` | `Admin@12345` | `/login/admin` |
+| **Faculty Tutor** | `ayesha@3dlearning.com` | `Tutor@12345` | `/login/tutor` |
+| **Student** | `student@3dlearning.com` | `Student@12345` | `/login/student` |
+
+*Note: You can also register new student or tutor accounts at `/register`, or use the **"Mode" pill** in the top navigation bar to instantly switch view modes.*
+
+---
+
+## 🌐 Deploying to Production
+
+### 1. Upload to GitHub
+1. Create a new empty repository on [GitHub](https://github.com/new) (e.g., `3d-learning`).
+2. Run the following commands in your project root:
+```bash
 git add .
-git commit -m "3D Learning platform"
+git commit -m "feat: complete 3D Learning institute platform"
 git branch -M main
-git remote add origin https://github.com/<your-username>/<repo-name>.git
+git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPOSITORY_NAME>.git
 git push -u origin main
 ```
 
-Create the empty repository on github.com first. `.env` files and `node_modules` are already git-ignored.
+---
 
-## Deploy on Render (API + database + website in one service)
+### 2. Deploy on Render (API + PostgreSQL + React in One Service)
+The repository includes a ready-to-use `render.yaml` Blueprint.
 
-1. Render dashboard, **New**, **Blueprint**, pick your GitHub repo. It reads `render.yaml` and creates the web service and a free PostgreSQL database.
-2. When prompted, set `ADMIN_EMAIL` and `ADMIN_PASSWORD` (your owner login). `JWT_SECRET` is generated for you.
-3. After the first deploy, open the service URL. The API and the React app are both served from it.
+1. Go to the [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** > **Blueprint**.
+3. Connect your GitHub repository.
+4. Render will automatically detect `render.yaml` and configure:
+   - Web service (`Node.js`, build: `npm run build`, start: `npm start`).
+   - Managed PostgreSQL database (`3d-learning-db`).
+5. When prompted for environment variables:
+   - `ADMIN_EMAIL`: Set your owner email (e.g., `admin@3dlearning.com`).
+   - `ADMIN_PASSWORD`: Set a secure owner password.
+6. Click **Apply**. Once deployed, your web application will be live at `https://<your-render-subdomain>.onrender.com`.
 
-Note: Render's free Postgres database expires after a limited period. Use a paid plan, or point `DATABASE_URL` at Neon or Supabase, for long-term use.
+---
 
-## Deploy the React app on Vercel (talking to the Render API)
+### 3. Deploy Frontend on Vercel (Optional Separated Frontend)
+If you prefer hosting the React client separately on Vercel:
 
-1. Vercel, **Add New Project**, import the repo, set **Root Directory** to `client`.
-2. Add environment variable `VITE_API_URL` = your Render URL (for example `https://3d-learning.onrender.com`).
-3. Deploy. Then on Render add your Vercel domain to `CLIENT_ORIGIN` (comma-separated if several) so the API accepts it, and redeploy the API.
+1. Go to the [Vercel Dashboard](https://vercel.com/) and click **Add New Project**.
+2. Import your GitHub repository.
+3. Configure the project:
+   - **Root Directory**: `client`
+   - **Framework Preset**: `Vite` (automatically detected)
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Add the Environment Variable:
+   - `VITE_API_URL`: `https://<your-render-service>.onrender.com` (your Render backend URL).
+5. Click **Deploy**.
+6. On Render, add your Vercel domain to the `CLIENT_ORIGIN` environment variable so CORS allows requests.
 
-## Notes and limits
+---
 
-- **Payments use a built-in test gateway.** It validates the card (Luhn, expiry, CVC), stores only the last 4 digits and records the payment, but moves no real money. To take real payments, replace the marked block in `POST /api/bookings/:id/pay` in `server/src/app.js` with Stripe or PayPal.
-- Messaging uses polling rather than WebSockets, which keeps deployment simple on free hosting.
-- Render's free web service sleeps when idle, so the first request after a pause is slow.
-- The visual design follows the editorial style of edemis.com (serif headlines, navy and warm gold palette, card layout). It is not a copy of their site, assets or text.
+## 🛡️ Built-in Conflict-Free Scheduling & Test Gateway
+- **Slot Conflict Engine**: Checks availability and locks existing slots to ensure zero double-booking.
+- **Jitsi Meet Integration**: Automatically generates a private, tamper-proof video classroom link (`https://meet.jit.si/3DLearning-<id>`) for every session.
+- **Payment Gateway**: Validates card numbers (Luhn algorithm), expiry format, and CVC, and records payments and receipts without storing raw card data.
