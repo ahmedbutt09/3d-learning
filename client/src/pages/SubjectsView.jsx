@@ -189,6 +189,30 @@ export default function SubjectsView({ tutors = [], onScheduleSubject, onFilterS
     <>
       {/* Hero Banner (Screenshot 052200) */}
       <section className="hero-banner">
+        {/* Animated floating orbs */}
+        <div className="hero-orbs" aria-hidden="true">
+          <div className="hero-orb orb-1" />
+          <div className="hero-orb orb-2" />
+          <div className="hero-orb orb-3" />
+          <div className="hero-orb orb-4" />
+        </div>
+        {/* Rising particles */}
+        <div className="hero-particles" aria-hidden="true">
+          {[
+            { left: '8%',  top: '85%', animationDuration: '8s',  animationDelay: '0s',   background: '#4DE6A5', opacity: 0.7  },
+            { left: '22%', top: '90%', animationDuration: '12s', animationDelay: '-3s',  background: '#E5A93C', opacity: 0.55 },
+            { left: '38%', top: '75%', animationDuration: '9s',  animationDelay: '-5s',  background: '#4DE6A5', opacity: 0.6  },
+            { left: '52%', top: '88%', animationDuration: '11s', animationDelay: '-8s',  background: '#E5A93C', opacity: 0.4  },
+            { left: '65%', top: '80%', animationDuration: '7s',  animationDelay: '-2s',  background: '#4DE6A5', opacity: 0.5  },
+            { left: '78%', top: '92%', animationDuration: '13s', animationDelay: '-6s',  background: '#FFF',    opacity: 0.3  },
+            { left: '88%', top: '78%', animationDuration: '10s', animationDelay: '-4s',  background: '#E5A93C', opacity: 0.45 },
+            { left: '45%', top: '82%', animationDuration: '6s',  animationDelay: '-1s',  background: '#4DE6A5', opacity: 0.5  },
+            { left: '15%', top: '70%', animationDuration: '14s', animationDelay: '-9s',  background: '#E5A93C', opacity: 0.3  },
+            { left: '70%', top: '68%', animationDuration: '16s', animationDelay: '-7s',  background: '#4DE6A5', opacity: 0.25 },
+          ].map((p, i) => (
+            <div key={i} className="hero-particle" style={p} />
+          ))}
+        </div>
         <div className="container hero-grid">
           <div>
             <div className="eyebrow" style={{ color: '#E5A93C' }}>

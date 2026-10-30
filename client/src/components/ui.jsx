@@ -5,14 +5,12 @@ import { STATUS_LABEL, initials } from '../lib';
 
 export function Brand({ to = '/' }) {
   return (
-    <Link to={to} className="brand" aria-label="3D Learning Institute">
-      <div className="brand-emblem">
-        <GraduationCap size={22} />
-      </div>
-      <div className="brand-text">
-        <b>The Third Dimension Learning Institute</b>
-        <small>3D Learning · Online Tutoring Hub</small>
-      </div>
+    <Link to={to} className="brand brand-logo-wrap" aria-label="3D Learning Institute">
+      <img
+        src="/logo.jpg"
+        alt="3D Learning Institute"
+        className="brand-logo-img"
+      />
     </Link>
   );
 }
