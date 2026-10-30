@@ -91,7 +91,6 @@ export function PublicLayout({ onOpenAddTutor }) {
             className="menu-btn"
             onClick={() => setMobileMenuOpen((o) => !o)}
             aria-label="Toggle menu"
-            style={{ display: 'none', background: 'none', border: 0, color: '#FFF' }}
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -116,6 +115,27 @@ export function PublicLayout({ onOpenAddTutor }) {
             <NavLink to="/reviews" className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`}>
               Reviews
             </NavLink>
+
+            {/* Mobile Actions in menu when screen is small */}
+            {mobileMenuOpen && (
+              <div className="mobile-menu-actions" style={{ marginTop: 14, paddingTop: 14, borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <button
+                  type="button"
+                  className="btn gold sm block"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setShowAddModal(true);
+                  }}
+                >
+                  <Plus size={15} /> Add Tutor & Upload CV
+                </button>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', paddingTop: 6 }}>
+                  <button type="button" className="btn ghost-dark sm" onClick={() => handleModeSwitch('student')}>Student View</button>
+                  <button type="button" className="btn ghost-dark sm" onClick={() => handleModeSwitch('tutor')}>Tutor View</button>
+                  <button type="button" className="btn ghost-dark sm" onClick={() => handleModeSwitch('admin')}>Admin View</button>
+                </div>
+              </div>
+            )}
           </nav>
 
           {/* Actions: + Add Tutor & Mode Switcher */}
@@ -146,10 +166,10 @@ export function PublicLayout({ onOpenAddTutor }) {
                     right: 0,
                     top: '100%',
                     marginTop: 6,
-                    background: '#FFF',
+                    background: '#0B1021',
                     borderRadius: 10,
-                    border: '1px solid var(--line)',
-                    boxShadow: 'var(--shadow-lg)',
+                    border: '1px solid #1F2A44',
+                    boxShadow: '0 12px 32px rgba(0, 0, 0, 0.4)',
                     minWidth: 200,
                     zIndex: 100,
                     overflow: 'hidden',
@@ -157,26 +177,26 @@ export function PublicLayout({ onOpenAddTutor }) {
                     flexDirection: 'column'
                   }}
                 >
-                  <div style={{ padding: '8px 12px', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)', background: '#FAF8F4', borderBottom: '1px solid var(--line)' }}>
+                  <div style={{ padding: '8px 12px', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#64748B', background: '#070B16', borderBottom: '1px solid #1F2A44' }}>
                     Switch View / Account
                   </div>
                   <button
                     type="button"
-                    style={{ padding: '10px 14px', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: 'var(--ink)' }}
+                    style={{ padding: '10px 14px', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: '#E5E7EB' }}
                     onClick={() => handleModeSwitch('student')}
                   >
                     👤 Student View
                   </button>
                   <button
                     type="button"
-                    style={{ padding: '10px 14px', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: 'var(--ink)' }}
+                    style={{ padding: '10px 14px', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: '#E5E7EB' }}
                     onClick={() => handleModeSwitch('tutor')}
                   >
                     🎓 Tutor View
                   </button>
                   <button
                     type="button"
-                    style={{ padding: '10px 14px', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: 'var(--ink)' }}
+                    style={{ padding: '10px 14px', border: 0, background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: '#E5E7EB' }}
                     onClick={() => handleModeSwitch('admin')}
                   >
                     👑 Owner (Admin) View
@@ -184,7 +204,7 @@ export function PublicLayout({ onOpenAddTutor }) {
                   {user && (
                     <button
                       type="button"
-                      style={{ padding: '10px 14px', border: 0, borderTop: '1px solid var(--line)', background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: 'var(--bad)' }}
+                      style={{ padding: '10px 14px', border: 0, borderTop: '1px solid #1F2A44', background: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.86rem', color: 'var(--bad)' }}
                       onClick={() => handleModeSwitch('signout')}
                     >
                       🚪 Sign Out
@@ -304,17 +324,17 @@ export function DashLayout() {
       <div className={`scrim ${open ? 'open' : ''}`} onClick={() => setOpen(false)} />
       <aside className={`sidebar ${open ? 'open' : ''}`}>
         <Brand to="/app" />
-        <div style={{ margin: '14px 0 6px', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#889BB0', padding: '0 12px' }}>
+        <div className="sidebar-role-badge">
           {user.role === 'admin' ? 'Owner Portal' : user.role === 'tutor' ? 'Faculty Portal' : 'Student Portal'}
         </div>
-        <nav style={{ display: 'grid', gap: 4 }}>
+        <nav className="sidebar-nav">
           {items.map(([path, label, Icon, end]) => (
             <NavLink key={path} to={path} end={Boolean(end)} className={({ isActive }) => `side-link ${isActive ? 'active' : ''}`}>
               <Icon size={18} />
               <span>{label}</span>
             </NavLink>
           ))}
-          <Link to="/" className="side-link" style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <Link to="/" className="side-link public-studio-link">
             <Calendar size={18} />
             <span>Public Studio App</span>
           </Link>
@@ -322,14 +342,14 @@ export function DashLayout() {
 
         <div className="side-foot">
           <div className="side-user">
-            <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#E5A93C', color: 'var(--navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+            <div className="side-avatar">
               {user.name[0]}
             </div>
-            <div style={{ minWidth: 0, flex: 1 }}>
-              <div style={{ fontWeight: 600, fontSize: '0.9rem', color: '#FFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div className="side-user-meta">
+              <div className="side-user-name">
                 {user.name}
               </div>
-              <small style={{ color: '#889BB0' }}>{user.email}</small>
+              <small className="side-user-email">{user.email}</small>
             </div>
           </div>
           <button
@@ -345,7 +365,7 @@ export function DashLayout() {
       <div className="main">
         <header className="topbar">
           <Brand to="/app" />
-          <button onClick={() => setOpen(true)} aria-label="Open menu">
+          <button className="topbar-menu-btn" onClick={() => setOpen(true)} aria-label="Open menu">
             <Menu size={22} />
           </button>
         </header>
